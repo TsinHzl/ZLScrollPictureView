@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EA6CC54E1D517D5D00C99F59 /* ZLScrollPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA6CC54D1D517D5D00C99F59 /* ZLScrollPictureView.m */; };
+		EA4E56CA1D93BC2D008F5E3A /* ZLScrollPictureView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA4E56C91D93BC2D008F5E3A /* ZLScrollPictureView.m */; };
 		EABDE3651D517C8800B73DD3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EABDE3641D517C8800B73DD3 /* main.m */; };
 		EABDE3681D517C8800B73DD3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EABDE3671D517C8800B73DD3 /* AppDelegate.m */; };
 		EABDE36B1D517C8800B73DD3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EABDE36A1D517C8800B73DD3 /* ViewController.m */; };
@@ -36,8 +36,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		EA6CC54C1D517D5D00C99F59 /* ZLScrollPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLScrollPictureView.h; sourceTree = "<group>"; };
-		EA6CC54D1D517D5D00C99F59 /* ZLScrollPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLScrollPictureView.m; sourceTree = "<group>"; };
+		EA4E56C81D93BC2D008F5E3A /* ZLScrollPictureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLScrollPictureView.h; sourceTree = "<group>"; };
+		EA4E56C91D93BC2D008F5E3A /* ZLScrollPictureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLScrollPictureView.m; sourceTree = "<group>"; };
 		EABDE3601D517C8800B73DD3 /* ZLScrollPictureViewExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZLScrollPictureViewExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EABDE3641D517C8800B73DD3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		EABDE3661D517C8800B73DD3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -81,13 +81,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		EA6CC54B1D517D5D00C99F59 /* ZLScrollPictureView */ = {
+		EA4E56C71D93BC2D008F5E3A /* ZLScrollPictureView */ = {
 			isa = PBXGroup;
 			children = (
-				EA6CC54C1D517D5D00C99F59 /* ZLScrollPictureView.h */,
-				EA6CC54D1D517D5D00C99F59 /* ZLScrollPictureView.m */,
+				EA4E56C81D93BC2D008F5E3A /* ZLScrollPictureView.h */,
+				EA4E56C91D93BC2D008F5E3A /* ZLScrollPictureView.m */,
 			);
-			path = ZLScrollPictureView;
+			name = ZLScrollPictureView;
+			path = ../../ZLScrollPictureView;
 			sourceTree = "<group>";
 		};
 		EABDE3571D517C8800B73DD3 = {
@@ -113,7 +114,7 @@
 		EABDE3621D517C8800B73DD3 /* ZLScrollPictureViewExample */ = {
 			isa = PBXGroup;
 			children = (
-				EA6CC54B1D517D5D00C99F59 /* ZLScrollPictureView */,
+				EA4E56C71D93BC2D008F5E3A /* ZLScrollPictureView */,
 				EABDE3661D517C8800B73DD3 /* AppDelegate.h */,
 				EABDE3671D517C8800B73DD3 /* AppDelegate.m */,
 				EABDE3691D517C8800B73DD3 /* ViewController.h */,
@@ -283,7 +284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EA6CC54E1D517D5D00C99F59 /* ZLScrollPictureView.m in Sources */,
+				EA4E56CA1D93BC2D008F5E3A /* ZLScrollPictureView.m in Sources */,
 				EABDE36B1D517C8800B73DD3 /* ViewController.m in Sources */,
 				EABDE3681D517C8800B73DD3 /* AppDelegate.m in Sources */,
 				EABDE3651D517C8800B73DD3 /* main.m in Sources */,
