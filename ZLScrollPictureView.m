@@ -8,6 +8,7 @@
 //  http://www.cocoachina.com/bbs/read.php?tid=299721
 
 #import "ZLScrollPictureView.h"
+#import <UIImageView+WebCache.h>
 
 @interface ZLScrollPictureView()<UIScrollViewDelegate>
 
@@ -64,8 +65,7 @@
     //图片最好添加在pagecontrol之后，不然会显示不出pagecontrol的
     for (NSInteger i = 0; i < picNamesLink.count; i++) {
         UIImageView *imageView = [[UIImageView alloc] init];
-        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:picNamesLink[i]]];
-        imageView.image = image;
+        [imageView sd_setImageWithURL:[NSURL URLWithString:picNamesLink[i]]];
         imageX = frame.size.width * i;
         imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
         [scrollPicVeiw.scrollView addSubview:imageView];
