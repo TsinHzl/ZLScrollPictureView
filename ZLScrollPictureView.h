@@ -8,7 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol ZLScrollPictureViewDelegate <NSObject>
+
+@optional
+- (void)scrollPictureViewDidClicked:(UIButton *)button;
+
+@end
+
 @interface ZLScrollPictureView : UIView
+
+@property(nonatomic, weak)id<ZLScrollPictureViewDelegate> delegate;
 
 //一般的工厂方法
 + (instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect )frame;

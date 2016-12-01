@@ -9,6 +9,7 @@
 
 #import "ZLScrollPictureView.h"
 #import <UIImageView+WebCache.h>
+#import <UIButton+WebCache.h>
 
 @interface ZLScrollPictureView()<UIScrollViewDelegate>
 
@@ -64,8 +65,11 @@
     CGFloat imageH = frame.size.height;
     //图片最好添加在pagecontrol之后，不然会显示不出pagecontrol的
     for (NSInteger i = 0; i < picNamesLink.count; i++) {
-        UIImageView *imageView = [[UIImageView alloc] init];
-        [imageView sd_setImageWithURL:[NSURL URLWithString:picNamesLink[i]]];
+        UIButton *imageView = [[UIButton alloc] init];
+//        [imageView sd_setImageWithURL:[NSURL URLWithString:picNamesLink[i]]];
+        [imageView sd_setBackgroundImageWithURL:[NSURL URLWithString:picNamesLink[i]] forState:UIControlStateNormal];
+        imageView.tag = i;
+        [imageView addTarget:scrollPicVeiw action:@selector(imageViewClicked:) forControlEvents:UIControlEventTouchUpInside];
         imageX = frame.size.width * i;
         imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
         [scrollPicVeiw.scrollView addSubview:imageView];
@@ -179,5 +183,12 @@
     
 }
 
+#pragma mark - 按钮点击方法
+
+- (void)imageViewClicked:(UIButton *)button {
+    if ([self.delegate respondsToSelector:@selector(scrollPictureViewDidClicked:)]) {
+        [self.delegate scrollPictureViewDidClicked:button];
+    }
+}
 
 @end
