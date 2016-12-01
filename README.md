@@ -7,6 +7,7 @@
 **使用说明：
 ***将ZLScrollPictureView文件夹拖进你的项目之中，之后太嫩家引用
 ***使用一下的代码即可使用次框架
+***特别说明：想要响应图片的点击方法，请成为其代理，并遵循协议：ZLScrollPictureViewDelegate，并实现代理方法：- (void)scrollPictureViewDidClicked:(UIButton *)button
 //一般的工厂方法
 + (instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect )frame;
 //可以改变pagecontrol的indicatorclolor的工厂方法
