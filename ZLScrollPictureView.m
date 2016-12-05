@@ -121,7 +121,7 @@
     scrollPicVeiw.pageControl.currentPage = 0;
     scrollPicVeiw.scrollView.contentSize = CGSizeMake(frame.size.width * picsName.count, 0);
     
-    scrollPicVeiw.timer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:scrollPicVeiw selector:@selector(picScroll) userInfo:nil repeats:YES];
+    scrollPicVeiw.timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:scrollPicVeiw selector:@selector(picScroll) userInfo:nil repeats:YES];
     
     return scrollPicVeiw;
 }
