@@ -52,12 +52,6 @@
     return _pageControl;
 }
 
-#pragma mark - 子view进行布局，主要对pageControl位置进行设置
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    self.pageControl.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height - 15);
-}
 
 #pragma mark - 工厂方法
 //根据url的工厂方法
@@ -148,49 +142,42 @@
     
     return scrollPicView;
 }
-#pragma mark - scrollView代理方法
+#pragma mark - 代理方法
 
-/**
- 开始拖拽时调用，这里作废定时器
- */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.timer invalidate];
     self.timer = nil;
 }
 
-/**
- 滚动的时候调用
- 这里主要对pageControl的currentPage进行设置和实现轮播功能
- */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    CGFloat width = self.frame.size.width;
     
-    NSInteger count = (scrollView.contentOffset.x + self.frame.size.width * 0.5)/self.frame.size.width;
+    NSInteger count = (scrollView.contentOffset.x + width * 0.5)/width;
     NSInteger picNum = self.scrollView.subviews.count;
     if (count == 0) {
-        [self.scrollView setContentOffset:CGPointMake(self.scrollView.frame.size.width*(picNum - 2), 0) animated:NO];
+        [self.scrollView setContentOffset:CGPointMake(width*(picNum - 2), 0) animated:NO];
     }
-    if (count == 4) {
-        [self.scrollView setContentOffset:CGPointMake(self.scrollView.frame.size.width, 0) animated:NO];
+    if (count == picNum - 1) {
+        [self.scrollView setContentOffset:CGPointMake(width, 0) animated:NO];
     }
-    if (count > 0 && count < 4) {
+    if (count > 0 && count < picNum - 1) {
         count--;
         self.pageControl.currentPage = count;
     }
     
 }
 
-
-/**
- 加速结束时进行调用
- 重新对定时器进行激活
- */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(picScroll) userInfo:nil repeats:YES];
 }
-
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.pageControl.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height - 15);
+}
 
 #pragma mark - 定时器方法
 
