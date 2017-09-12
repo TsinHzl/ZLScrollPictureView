@@ -52,6 +52,12 @@
     return _pageControl;
 }
 
+#pragma mark - 子view进行布局，主要对pageControl位置进行设置
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.pageControl.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height - 15);
+}
 
 #pragma mark - 工厂方法
 //根据url的工厂方法
@@ -142,14 +148,21 @@
     
     return scrollPicView;
 }
-#pragma mark - 代理方法
+#pragma mark - scrollView代理方法
 
+/**
+ 开始拖拽时调用，这里作废定时器
+ */
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [self.timer invalidate];
     self.timer = nil;
 }
 
+/**
+ 滚动的时候调用
+ 这里主要对pageControl的currentPage进行设置和实现轮播功能
+ */
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     
@@ -168,15 +181,16 @@
     
 }
 
+
+/**
+ 加速结束时进行调用
+ 重新对定时器进行激活
+ */
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(picScroll) userInfo:nil repeats:YES];
 }
-- (void)layoutSubviews
-{
-    [super layoutSubviews];
-    self.pageControl.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height - 15);
-}
+
 
 #pragma mark - 定时器方法
 
