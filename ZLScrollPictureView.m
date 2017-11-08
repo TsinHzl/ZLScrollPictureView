@@ -8,8 +8,8 @@
 //  http://www.cocoachina.com/bbs/read.php?tid=299721
 
 #import "ZLScrollPictureView.h"
-#import <UIImageView+WebCache.h>
-#import <UIButton+WebCache.h>
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 
 @interface ZLScrollPictureView()<UIScrollViewDelegate>
 
@@ -193,9 +193,11 @@
 #pragma mark - 按钮点击方法
 
 - (void)imageViewClicked:(UIButton *)button {
+    UIButton *btn = (UIButton *)self.scrollView.subviews[self.pageControl.currentPage + 1];
     if ([self.delegate respondsToSelector:@selector(scrollPictureViewDidClicked:)]) {
-        [self.delegate scrollPictureViewDidClicked:button];
+        [self.delegate scrollPictureViewDidClicked:btn];
     }
+    self.picClickedBlock(btn);
 }
 
 @end
