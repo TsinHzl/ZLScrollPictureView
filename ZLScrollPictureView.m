@@ -159,6 +159,7 @@
     if (count == 0) {
         [self.scrollView setContentOffset:CGPointMake(width*(picNum - 2), 0) animated:NO];
     }
+    
     if (count == picNum - 1) {
         [self.scrollView setContentOffset:CGPointMake(width, 0) animated:NO];
     }
@@ -197,7 +198,11 @@
     if ([self.delegate respondsToSelector:@selector(scrollPictureViewDidClicked:)]) {
         [self.delegate scrollPictureViewDidClicked:btn];
     }
-    self.picClickedBlock(btn);
+    if (self.picClickedBlock) {
+        self.picClickedBlock(btn);
+    }
+    
 }
 
 @end
+
