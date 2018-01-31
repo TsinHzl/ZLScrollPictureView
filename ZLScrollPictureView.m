@@ -191,7 +191,7 @@
     
 }
 
-#pragma mark - 按钮点击方法
+#pragma mark - 按钮/图片 点击方法
 
 - (void)imageViewClicked:(UIButton *)button {
     UIButton *btn = (UIButton *)self.scrollView.subviews[self.pageControl.currentPage + 1];

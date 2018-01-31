@@ -29,7 +29,7 @@
 //可以改变pagecontrol的indicatorclolor的工厂方法
 + (instancetype)scrollPicWithPicNamesLink:(NSArray *)picNamesLink frame:(CGRect )frame pageControlCurrentTintColor:(UIColor *)currentColor pageContorlTintColor:(UIColor *)tintColor;
 
-/* picClickedBlock */
+/* 这个相当于代理方法，响应图片点击事件 */
 @property (copy, nonatomic) void(^picClickedBlock)(UIButton *btn);
 
 @end
