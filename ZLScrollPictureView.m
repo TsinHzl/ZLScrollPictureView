@@ -11,6 +11,8 @@
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
 
+static CGFloat const ZLTimerInterval = 3.0f;
+
 @interface ZLScrollPictureView()<UIScrollViewDelegate>
 
 @property(nonatomic, strong) NSArray<NSString *> *picNames;
@@ -68,16 +70,16 @@
 //可以设置pagecontrol的color
 + (instancetype)scrollPicWithPicNamesLink:(NSArray *)picNamesLink frame:(CGRect)frame pageControlCurrentTintColor:(UIColor *)currentColor pageContorlTintColor:(UIColor *)tintColor
 {
-    ZLScrollPictureView *scrollPicVeiw = [self scrollPicWithPicNamesLink:picNamesLink frame:frame];
+    ZLScrollPictureView *scrollPicView = [self scrollPicWithPicNamesLink:picNamesLink frame:frame];
     
     if (currentColor) {
-        scrollPicVeiw.pageControl.currentPageIndicatorTintColor = currentColor;
+        scrollPicView.pageControl.currentPageIndicatorTintColor = currentColor;
     }
     if (tintColor) {
-        scrollPicVeiw.pageControl.pageIndicatorTintColor = tintColor;
+        scrollPicView.pageControl.pageIndicatorTintColor = tintColor;
     }
     
-    return scrollPicVeiw;
+    return scrollPicView;
 }
 //根据图片名称的工厂方法
 + (instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect)frame
@@ -93,15 +95,15 @@
 //可以改变pagecontrol的color
 + (instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect)frame pageControlCurrentTintColor:(UIColor *)currentColor pageContorlTintColor:(UIColor *)tintColor
 {
-    ZLScrollPictureView *scrollPicVeiw = [self scrollPicWithPicsName:picsName frame:frame];
+    ZLScrollPictureView *scrollPicView = [self scrollPicWithPicsName:picsName frame:frame];
     
     if (currentColor) {
-        scrollPicVeiw.pageControl.currentPageIndicatorTintColor = currentColor;
+        scrollPicView.pageControl.currentPageIndicatorTintColor = currentColor;
     }
     if (tintColor) {
-        scrollPicVeiw.pageControl.pageIndicatorTintColor = tintColor;
+        scrollPicView.pageControl.pageIndicatorTintColor = tintColor;
     }
-    return scrollPicVeiw;
+    return scrollPicView;
 }
 
 //根据图片名称的工厂方法
@@ -137,8 +139,7 @@
     scrollPicView.pageControl.currentPage = 0;
     scrollPicView.scrollView.contentSize = CGSizeMake(frame.size.width * count, 0);
     
-    scrollPicView.timer = [NSTimer scheduledTimerWithTimeInterval:3.0 target:scrollPicView selector:@selector(picScroll) userInfo:nil repeats:YES];
-    
+    scrollPicView.timer = [NSTimer scheduledTimerWithTimeInterval:ZLTimerInterval target:scrollPicView selector:@selector(picScroll) userInfo:nil repeats:YES];
     
     return scrollPicView;
 }
@@ -146,6 +147,7 @@
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+    //
     [self.timer invalidate];
     self.timer = nil;
 }
@@ -172,7 +174,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(picScroll) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:ZLTimerInterval target:self selector:@selector(picScroll) userInfo:nil repeats:YES];
 }
 - (void)layoutSubviews
 {
@@ -204,5 +206,9 @@
     
 }
 
+- (void)dealloc {
+    [self.timer invalidate];
+    self.timer = nil;
+}
 @end
 
