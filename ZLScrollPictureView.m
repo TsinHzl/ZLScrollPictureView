@@ -126,7 +126,8 @@ static CGFloat const ZLTimerInterval = 3.0f;
         UIButton *imageView = [[UIButton alloc] init];
         imageView.tag = i;
         [imageView addTarget:scrollPicView action:@selector(imageViewClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
+        imageView.contentMode = UIViewContentModeScaleAspectFill;
+        imageView.clipsToBounds = YES;
         imageX = frame.size.width * i;
         imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
         [scrollPicView.scrollView addSubview:imageView];
@@ -139,7 +140,10 @@ static CGFloat const ZLTimerInterval = 3.0f;
     scrollPicView.pageControl.currentPage = 0;
     scrollPicView.scrollView.contentSize = CGSizeMake(frame.size.width * count, 0);
     
-    scrollPicView.timer = [NSTimer scheduledTimerWithTimeInterval:ZLTimerInterval target:scrollPicView selector:@selector(picScroll) userInfo:nil repeats:YES];
+    if (picsName.count > 1) {
+        scrollPicView.timer = [NSTimer scheduledTimerWithTimeInterval:ZLTimerInterval target:scrollPicView selector:@selector(picScroll) userInfo:nil repeats:YES];
+    }
+    
     
     return scrollPicView;
 }
@@ -158,13 +162,6 @@ static CGFloat const ZLTimerInterval = 3.0f;
     
     NSInteger count = (scrollView.contentOffset.x + width * 0.5)/width;
     NSInteger picNum = self.scrollView.subviews.count;
-    if (count == 0) {
-        [self.scrollView setContentOffset:CGPointMake(width*(picNum - 2), 0) animated:NO];
-    }
-    
-    if (count == picNum - 1) {
-        [self.scrollView setContentOffset:CGPointMake(width, 0) animated:NO];
-    }
     if (count > 0 && count < picNum - 1) {
         count--;
         self.pageControl.currentPage = count;
@@ -174,12 +171,41 @@ static CGFloat const ZLTimerInterval = 3.0f;
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    [self configViewWithScrollView:scrollView];
+    
+    if (self.pageControl.numberOfPages <= 1) return;
+    
     self.timer = [NSTimer scheduledTimerWithTimeInterval:ZLTimerInterval target:self selector:@selector(picScroll) userInfo:nil repeats:YES];
 }
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    //    ZLLog(@"----scrollViewDidEndScrollingAnimation-----");
+    [self configViewWithScrollView:scrollView];
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     self.pageControl.center = CGPointMake(self.frame.size.width * 0.5, self.frame.size.height - 15);
+}
+
+- (void)configViewWithScrollView:(UIScrollView *)scrollView {
+    CGFloat width = self.frame.size.width;
+    
+    NSInteger count = (scrollView.contentOffset.x + width * 0.5)/width;
+    NSInteger picNum = self.scrollView.subviews.count;
+    if (count == 0) {
+        [self.scrollView setContentOffset:CGPointMake(width*(picNum - 2), 0) animated:NO];
+    }
+    
+    if (count == picNum - 1) {
+        [self.scrollView setContentOffset:CGPointMake(width, 0) animated:NO];
+    }
+    
+    if (count > 0 && count < picNum - 1) {
+        count--;
+        self.pageControl.currentPage = count;
+    }
 }
 
 #pragma mark - 定时器方法
@@ -189,8 +215,6 @@ static CGFloat const ZLTimerInterval = 3.0f;
     CGPoint contentOffset = self.scrollView.contentOffset;
     contentOffset.x = self.scrollView.contentOffset.x + self.frame.size.width;
     [self.scrollView setContentOffset:contentOffset animated:YES];
-    
-    
 }
 
 #pragma mark - 按钮/图片 点击方法
