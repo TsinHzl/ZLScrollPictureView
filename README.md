@@ -50,3 +50,10 @@ v.delegate = self;
     }
 }
 ```
+
+### 当然也可以用下面提供的这个block来处理图片点击事件
+```
+v.picClickedBlock = ^(UIButton *btn) {
+        //做相应的图片点击响应事件
+    };
+```
