@@ -8,8 +8,8 @@
 //  http://www.cocoachina.com/bbs/read.php?tid=299721
 
 #import "ZLScrollPictureView.h"
-#import <UIImageView+WebCache.h>
-#import <UIButton+WebCache.h>
+#import "UIImageView+WebCache.h"
+#import "UIButton+WebCache.h"
 
 static CGFloat const ZLTimerInterval = 3.0f;
 
