@@ -30,6 +30,6 @@
 
 # 示例
 ```
-     ZLScrollPictureView *v = [ZLScrollPictureView scrollPicWithPicNamesLink:arr frame:_scrollPicView.bounds     pageControlCurrentTintColor:[UIColor purpleColor] pageContorlTintColor:[UIColor whiteColor]];
-    [self.view addSubview:v];
+ZLScrollPictureView *v = [ZLScrollPictureView scrollPicWithPicNamesLink:arr frame:_scrollPicView.bounds     pageControlCurrentTintColor:[UIColor purpleColor] pageContorlTintColor:[UIColor whiteColor]];
+[self.view addSubview:v];
 ```
