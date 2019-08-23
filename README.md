@@ -16,16 +16,17 @@
 @property (weak, nonatomic) void(^picClickedBlock)(UIButton *btn);<br>
 ### 特别注意：如果想获取点击图片的tag的，必须将其tag减1才是正确的tag值<br>
 *************************************************************
-一般的工厂方法<br>
+```
+//一般的工厂方法<br>
  +(instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect )frame;<br>
 可以改变pagecontrol的indicatorclolor的工厂方法<br>
  +(instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect )frame pageControlCurrentTintColor:(UIColor *)currentColor pageContorlTintColor:(UIColor *)tintColor;<br>
 
-根据图片的url进行图片的设置的工厂方法<br>
+//根据图片的url进行图片的设置的工厂方法<br>
  +(instancetype)scrollPicWithPicNamesLink:(NSArray *)picNamesLink frame:(CGRect )frame;<br>
-可以改变pagecontrol的indicatorclolor的工厂方法<br>
+//可以改变pagecontrol的indicatorclolor的工厂方法<br>
  +(instancetype)scrollPicWithPicNamesLink:(NSArray *)picNamesLink frame:(CGRect )frame pageControlCurrentTintColor:(UIColor *)currentColor pageContorlTintColor:(UIColor *)tintColor;
-
+```
 **********************************************************
 
 # 示例
