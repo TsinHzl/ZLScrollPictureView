@@ -26,3 +26,11 @@
 可以改变pagecontrol的indicatorclolor的工厂方法<br>
  +(instancetype)scrollPicWithPicNamesLink:(NSArray *)picNamesLink frame:(CGRect )frame pageControlCurrentTintColor:(UIColor *)currentColor pageContorlTintColor:(UIColor *)tintColor;
 
+**********************************************************
+
+# 示例
+'''
+ZLScrollPictureView *v = [ZLScrollPictureView scrollPicWithPicNamesLink:arr frame:_scrollPicView.bounds pageControlCurrentTintColor:[UIColor purpleColor] pageContorlTintColor:[UIColor whiteColor]];
+    [self.view addSubview:v];
+
+'''
