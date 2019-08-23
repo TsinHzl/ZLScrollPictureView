@@ -1,14 +1,14 @@
 # ZLScrollPictureView
-常见的左右滑动轮播展示图片的框架
+###常见的左右滑动轮播展示图片的框架
 
 此框架支持常见的页面上方左右滑动图片的展示
 简单的几句代码即可解决繁杂的展示，为你剩下更多的心
 
 **********************************************************
-**使用说明：
-***将ZLScrollPictureView文件夹拖进你的项目之中，之后引用
-***使用以下的代码即可使用次框架
-***特别说明：想要响应图片的点击方法，请成为其代理，并遵循协议：ZLScrollPictureViewDelegate
+##使用说明：
+####将ZLScrollPictureView文件夹拖进你的项目之中，之后引用
+####使用以下的代码即可使用次框架
+###特别说明：想要响应图片的点击方法，请成为其代理，并遵循协议：ZLScrollPictureViewDelegate
 并实现代理方法：
 - (void)scrollPictureViewDidClicked:(UIButton *)button;
 或者：
