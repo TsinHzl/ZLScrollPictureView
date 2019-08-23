@@ -29,8 +29,24 @@
 ```
 **********************************************************
 
-# 示例
+## 示例
 ```
 ZLScrollPictureView *v = [ZLScrollPictureView scrollPicWithPicNamesLink:picsArr frame:self.view.bounds pageControlCurrentTintColor:[UIColor purpleColor] pageContorlTintColor:[UIColor whiteColor]];
 [self.view addSubview:v];
+```
+### 设置代理
+```
+v.delegate = self;
+```
+
+### 遵循代理ZLScrollPictureViewDelegate并实现下面代理方法
+```
+#pragma mark - ZLScrollPictureViewDelegate
+- (void)scrollPictureViewDidClicked:(UIButton *)button {
+    if (button.tag == 1) {
+       //做相应的图片点击响应事件
+    }else if (button.tag == 2) {
+    
+    }
+}
 ```
