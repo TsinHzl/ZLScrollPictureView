@@ -10,7 +10,7 @@
 #### 使用以下的代码即可使用次框架<br>
 ### 特别说明：想要响应图片的点击方法，请成为其代理，并遵循协议：ZLScrollPictureViewDelegate<br>
 并实现代理方法：<br>
-- (void)scrollPictureViewDidClicked:(UIButton *)button;<br>
+ -(void)scrollPictureViewDidClicked:(UIButton *)button;<br>
 或者：<br>
 实现属性：<br>
 @property (weak, nonatomic) void(^picClickedBlock)(UIButton *btn);<br>
