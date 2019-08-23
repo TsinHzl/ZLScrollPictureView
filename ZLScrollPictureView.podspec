@@ -116,7 +116,7 @@ Pod::Spec.new do |s|
   #
 
   s.framework  = "UIKit"
-  # s.frameworks = "SomeFramework", "AnotherFramework"
+  # s.frameworks = "SDWebImage"
 
   # s.library   = "iconv"
   # s.libraries = "iconv", "xml2"
@@ -131,6 +131,6 @@ Pod::Spec.new do |s|
   # s.requires_arc = true
   s.xcconfig = { "FRAMEWORK_SEARCH_PATHS" => "$(PLATFORM_DIR)/Developer/Library/Frameworks" }
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # s.dependency = 'SDWebImage'
+  s.dependency "SDWebImage"
 
 end
