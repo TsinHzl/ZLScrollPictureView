@@ -4,8 +4,6 @@
 //
 //  Created by hezhonglin on 16/7/20.
 //  Copyright © 2016年 hezhonglin. All rights reserved.
-//  iOS/mac开发的一些知名个人博客:
-//  http://www.cocoachina.com/bbs/read.php?tid=299721
 
 #import "ZLScrollPictureView.h"
 #import "UIImageView+WebCache.h"
@@ -59,7 +57,8 @@ static CGFloat const ZLTimerInterval = 3.0f;
 //根据url的工厂方法
 + (instancetype)scrollPicWithPicNamesLink:(NSArray *)picNamesLink frame:(CGRect)frame
 {
-    return [self scrollPicWithPicsName:picNamesLink frame:frame setPicBlock:^(NSArray<UIButton *> *imageViews,NSArray *newArr) {
+    return [self scrollPicWithPicsName:picNamesLink frame:frame setPicBlock:^(ZLScrollPictureView *scrollPicView, NSArray<UIButton *> *imageViews, NSArray *newArr) {
+        scrollPicView.picNamesLink = picNamesLink.copy;
         NSInteger count = newArr.count;
         for (NSInteger i = 0; i < count; i++) {
             UIButton *imageView = imageViews[i];
@@ -68,7 +67,7 @@ static CGFloat const ZLTimerInterval = 3.0f;
     }];
 }
 //可以设置pagecontrol的color
-+ (instancetype)scrollPicWithPicNamesLink:(NSArray *)picNamesLink frame:(CGRect)frame pageControlCurrentTintColor:(UIColor *)currentColor pageContorlTintColor:(UIColor *)tintColor
++ (instancetype)scrollPicWithPicNamesLink:(NSArray *)picNamesLink frame:(CGRect)frame pageControlCurrentColor:(UIColor *)currentColor pageContorlColor:(UIColor *)tintColor
 {
     ZLScrollPictureView *scrollPicView = [self scrollPicWithPicNamesLink:picNamesLink frame:frame];
     
@@ -84,7 +83,7 @@ static CGFloat const ZLTimerInterval = 3.0f;
 //根据图片名称的工厂方法
 + (instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect)frame
 {
-    return [self scrollPicWithPicsName:picsName frame:frame setPicBlock:^(NSArray<UIButton *> *imageViews,NSArray *newArr) {
+    return [self scrollPicWithPicsName:picsName frame:frame setPicBlock:^(ZLScrollPictureView *scrollPicView, NSArray<UIButton *> *imageViews, NSArray *newArr) {
         NSInteger count = newArr.count;
         for (NSInteger i = 0; i < count; i++) {
             UIButton *imageView = imageViews[i];
@@ -93,7 +92,7 @@ static CGFloat const ZLTimerInterval = 3.0f;
     }];
 }
 //可以改变pagecontrol的color
-+ (instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect)frame pageControlCurrentTintColor:(UIColor *)currentColor pageContorlTintColor:(UIColor *)tintColor
++ (instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect)frame pageControlCurrentColor:(UIColor *)currentColor pageContorlColor:(UIColor *)tintColor
 {
     ZLScrollPictureView *scrollPicView = [self scrollPicWithPicsName:picsName frame:frame];
     
@@ -107,15 +106,25 @@ static CGFloat const ZLTimerInterval = 3.0f;
 }
 
 //根据图片名称的工厂方法
-+ (instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect)frame setPicBlock:(void (^)(NSArray<UIButton *> *imageViews,NSArray *newArr))picBlock
++ (instancetype)scrollPicWithPicsName:(NSArray *)picsName frame:(CGRect)frame setPicBlock:(SPPicBlock)picBlock
 {
-    NSMutableArray *newArr = [NSMutableArray array];
-    [newArr addObject:picsName.lastObject];
-    [newArr addObjectsFromArray:picsName];
-    [newArr addObject:picsName.firstObject];
-    
     ZLScrollPictureView *scrollPicView = [[self alloc] initWithFrame:frame];
+    scrollPicView.picNames = picsName.copy;
+    [scrollPicView p_configSubviewsWithpicBlock:picBlock];
     
+    return scrollPicView;
+}
+
+#pragma mark 内部方法
+
+- (void)p_configSubviewsWithpicBlock:(SPPicBlock)picBlock {
+    
+    NSMutableArray *newArr = [NSMutableArray array];
+    [newArr addObject:self.picNames.lastObject];
+    [newArr addObjectsFromArray:self.picNames];
+    [newArr addObject:self.picNames.firstObject];
+    
+    CGRect frame = self.frame;
     CGFloat imageX = 0;
     CGFloat imageY = 0;
     CGFloat imageW = frame.size.width;
@@ -125,28 +134,90 @@ static CGFloat const ZLTimerInterval = 3.0f;
     for (NSInteger i = 0; i < count; i++) {
         UIButton *imageView = [[UIButton alloc] init];
         imageView.tag = i;
-        [imageView addTarget:scrollPicView action:@selector(imageViewClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [imageView addTarget:self action:@selector(imageViewClicked:) forControlEvents:UIControlEventTouchUpInside];
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         imageView.clipsToBounds = YES;
         imageX = frame.size.width * i;
         imageView.frame = CGRectMake(imageX, imageY, imageW, imageH);
-        [scrollPicView.scrollView addSubview:imageView];
+        [self.scrollView addSubview:imageView];
         
     }
-    [scrollPicView.scrollView setContentOffset:CGPointMake(imageW, 0) animated:NO];
-    picBlock(scrollPicView.scrollView.subviews,newArr);
     
-    scrollPicView.pageControl.numberOfPages = picsName.count;
-    scrollPicView.pageControl.currentPage = 0;
-    scrollPicView.scrollView.contentSize = CGSizeMake(frame.size.width * count, 0);
+    [self.scrollView setContentOffset:CGPointMake(imageW, 0) animated:NO];
     
-    if (picsName.count > 1) {
-        scrollPicView.timer = [NSTimer scheduledTimerWithTimeInterval:ZLTimerInterval target:scrollPicView selector:@selector(picScroll) userInfo:nil repeats:YES];
+    if (picBlock) {
+        picBlock(self,self.scrollView.subviews,newArr);
     }
     
     
-    return scrollPicView;
+    self.pageControl.numberOfPages = self.picNames.count;
+    self.pageControl.currentPage = 0;
+    self.scrollView.contentSize = CGSizeMake(frame.size.width * count, 0);
+    
+    if (self.picNames.count > 1) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:ZLTimerInterval target:self selector:@selector(picScroll) userInfo:nil repeats:YES];
+    }
 }
+
+#pragma mark - 属性设置方法
+
+- (void)setCurrentPageControlColor:(UIColor *)currentPageControlColor {
+    if (!currentPageControlColor) {
+        NSLog(@"error --- currentPageControlColor为空");
+        return;
+    }
+    
+    self.pageControl.currentPageIndicatorTintColor = currentPageControlColor;
+    [self.pageControl setNeedsDisplay];
+}
+
+- (void)setPageControlColor:(UIColor *)pageControlColor {
+    if (!pageControlColor) {
+        NSLog(@"error --- pageControlColor为空");
+        return;
+    }
+    
+    self.pageControl.pageIndicatorTintColor = pageControlColor;
+    [self.pageControl setNeedsDisplay];
+}
+
+/// 设置要显示的图片  以图片名的方式
+/// @param picsName 图片名数组
+- (void)zl_setPicsName:(NSArray <NSString *>*)picsName {
+    if (!picsName.count) {
+        NSLog(@"error --- picsName为空");
+        return;
+    }
+    
+    self.picNames = picsName.copy;
+    [self p_configSubviewsWithpicBlock:^(ZLScrollPictureView *scrollPicView, NSArray<UIButton *> *imageViews, NSArray *newArr) {
+        NSInteger count = newArr.count;
+        for (NSInteger i = 0; i < count; i++) {
+            UIButton *imageView = imageViews[i];
+            [imageView setBackgroundImage:newArr[i] forState:UIControlStateNormal];
+        }
+    }];
+}
+
+/// 设置要显示的图片  以url的方式
+/// @param picNamesLink 图片url数组
+- (void)zl_setPicNamesLink:(NSArray <NSString *>*)picNamesLink {
+    if (!picNamesLink.count) {
+        NSLog(@"error --- picNamesLink为空");
+        return;
+    }
+    
+    self.picNamesLink = picNamesLink.copy;
+    self.picNames = picNamesLink.copy;
+    [self p_configSubviewsWithpicBlock:^(ZLScrollPictureView *scrollPicView, NSArray<UIButton *> *imageViews, NSArray *newArr) {
+        NSInteger count = newArr.count;
+        for (NSInteger i = 0; i < count; i++) {
+            UIButton *imageView = imageViews[i];
+            [imageView sd_setBackgroundImageWithURL:[NSURL URLWithString:newArr[i]] forState:UIControlStateNormal];
+        }
+    }];
+}
+
 #pragma mark - 代理方法
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
@@ -234,5 +305,6 @@ static CGFloat const ZLTimerInterval = 3.0f;
     [self.timer invalidate];
     self.timer = nil;
 }
+
 @end
 
